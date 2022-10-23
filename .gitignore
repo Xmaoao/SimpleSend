@@ -1,0 +1,9 @@
+.vscode
+build
+dist
+
+*.code-workspace
+*.temp
+*.log
+
+test.*

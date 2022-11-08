@@ -8,7 +8,7 @@
 
 > **gflags**
 
->> 4.2.0 released
+>> 2.2.2 released
 
 ### Python
 

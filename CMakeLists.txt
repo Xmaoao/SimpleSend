@@ -9,11 +9,23 @@ add_subdirectory(GUI)
 
 message(STATUS "STATUS> Leaving folder ./GUI \n")
 
+include_directories(include)
+include_directories(${PROJECT_SOURCE_DIR}/lib/md5/include)
+
+message(STATUS "STATUS> Start linking static libraries")
+
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 # link static lib first
 
+message(STATUS "LINK>   Link gflags static lib")
 find_package(gflags REQUIRED)
+message(STATUS "LINK>   Link glog static lib")
 find_package(glog REQUIRED)
+
+message(STATUS "LINK>   Link MD5 calculate static lib")
+link_directories(${PROJECT_SOURCE_DIR}/lib/md5/lib)
+
+message(STATUS "STATUS> Finish linking static libraries \n")
 
 message(STATUS "STATUS> Accessing folder ./src \n")
 
@@ -38,6 +50,7 @@ add_executable(Simplesend ${SRC_LIST} ${MAIN})
 target_link_libraries(Simplesend 
     gflags
     glog::glog
+    libmd5fcxx.a
 )
 
 if(${REBUILT_GUI} STREQUAL "YES")

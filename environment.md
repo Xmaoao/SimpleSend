@@ -10,6 +10,10 @@
 
 >> 2.2.2 released
 
+> **glog**
+
+>> 0.6.0 released
+
 ### Python
 
 > 3.10.8, using by *Ace_Radom*

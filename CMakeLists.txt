@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Simplesend)
 
-message(STATUS "STATUS> Start building GUI target")
+message(STATUS "STATUS> Accessing folder ./GUI \n")
 
 add_subdirectory(GUI)
 # build SimplesendGUI
 
-message(STATUS "STATUS> Finish building GUI target")
+message(STATUS "STATUS> Leaving folder ./GUI \n")
 
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 # link static lib first
@@ -15,15 +15,19 @@ set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 find_package(gflags REQUIRED)
 find_package(glog REQUIRED)
 
+message(STATUS "STATUS> Accessing folder ./src \n")
+
 add_subdirectory(src)
 
-#set(MAIN main.cpp)
-set(MAIN test.cpp)
+message(STATUS "STAUTS> Leaving folder ./src \n")
 
-message(STATUS "FILE>   main file: " ${MAIN})
-message(STATUS "FILE>   src list:  " ${SRC_LIST})
+set(MAIN main.cpp)
+#set(MAIN test.cpp)
+# test file
 
-if(EXISTS ${PROJECT_SOURCE_DIR}/bin)
+message(STATUS "FILE>   main file: " ${MAIN} "\n")
+
+if((EXISTS ${PROJECT_SOURCE_DIR}/bin) AND (${REBUILT_GUI} STREQUAL "YES"))
     file(REMOVE_RECURSE ${PROJECT_SOURCE_DIR}/bin)
 endif()
 
@@ -36,9 +40,9 @@ target_link_libraries(Simplesend
     glog::glog
 )
 
-message(STATUS "STATUS> Start copying GUI target")
-
-file(COPY ${PROJECT_SOURCE_DIR}/GUI/dist/SimplesendGUI
-     DESTINATION ${PROJECT_SOURCE_DIR}/bin)
-
-message(STATUS "STATUS> Finish copying GUI target")
+if(${REBUILT_GUI} STREQUAL "YES")
+    message(STATUS "STATUS> Start copying GUI target")
+    file(COPY ${PROJECT_SOURCE_DIR}/GUI/dist/SimplesendGUI
+         DESTINATION ${PROJECT_SOURCE_DIR}/bin)
+    message(STATUS "STATUS> Finish copying GUI target \n")
+endif()

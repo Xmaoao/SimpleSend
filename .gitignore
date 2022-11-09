@@ -9,5 +9,6 @@ dist
 *.pyd
 *.temp
 *.log
+*.md5
 
 test.*

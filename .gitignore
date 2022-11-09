@@ -1,7 +1,11 @@
 .vscode
-bin
+/bin
 build
 dist
+LOG_INFO
+LOG_WARNING
+LOG_ERROR
+LOG_FATAL
 
 *.code-workspace
 *.exe

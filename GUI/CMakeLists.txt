@@ -1,7 +1,8 @@
-set(GUI_MAIN      ${PROJECT_SOURCE_DIR}/GUI/SimplesendGUI.py)
-set(GUI_MAIN_HASH ${PROJECT_SOURCE_DIR}/GUI/SimplesendGUI.py.md5)
+set(GUI_MAIN           ${PROJECT_SOURCE_DIR}/GUI/SimplesendGUI.py)
+set(GUI_MAIN_HASH      ${PROJECT_SOURCE_DIR}/GUI/SimplesendGUI.py.md5)
 
-set(GUI_MAIN_SPEC ${PROJECT_SOURCE_DIR}/GUI/SimplesendGUI.spec)
+set(GUI_MAIN_SPEC      ${PROJECT_SOURCE_DIR}/GUI/SimplesendGUI.spec)
+set(GUI_MAIN_SPEC_HASH ${PROJECT_SOURCE_DIR}/GUI/SimplesendGUI.spec.md5)
 
 message(STATUS "FILE>   GUI src: " ${GUI_MAIN} "\n")
 
@@ -11,7 +12,10 @@ set(BUILD_GUI_NEEDED "NO")
 message(STATUS "CHECK>  Start calculating all GUI src files' MD5")
 
 file(MD5 ${GUI_MAIN} GUI_MAIN_HASH_AFTER)
-message(STATUS "CHECK>  SimplesendGUI.py MD5: " ${GUI_MAIN_HASH_AFTER})
+message(STATUS "CHECK>  SimplesendGUI.py MD5:   " ${GUI_MAIN_HASH_AFTER})
+
+file(MD5 ${GUI_MAIN_SPEC} GUI_MAIN_SPEC_HASH_AFTER)
+message(STATUS "CHECK>  SimplesendGUI.spec MD5: " ${GUI_MAIN_SPEC_HASH_AFTER})
 
 message(STATUS "CHECK>  Finish calculating all GUI src files' MD5 \n")
 
@@ -27,9 +31,27 @@ if(EXISTS ${GUI_MAIN_HASH})
         message(STATUS "CHECK>  File " ${GUI_MAIN} " isn't changed")
     endif()
 else()
+    message(STATUS "CHECK>  File " ${GUI_MAIN_HASH} " isn't found, create it")
     file(WRITE ${GUI_MAIN_HASH} ${GUI_MAIN_HASH_AFTER})
+    set(BUILD_GUI_NEEDED "YES")
 endif()
 # check if file SimplesendGUI.py is changed
+
+if(EXISTS ${GUI_MAIN_SPEC_HASH})
+    file(STRINGS ${GUI_MAIN_SPEC_HASH} GUI_MAIN_SPEC_HASH_BEFORE LIMIT_COUNT 1)
+    if(NOT ${GUI_MAIN_SPEC_HASH_AFTER} STREQUAL ${GUI_MAIN_SPEC_HASH_BEFORE})
+        message(STATUS "CHECK>  File " ${GUI_MAIN_SPEC} " is changed")
+        set(BUILD_GUI_NEEDED "YES")
+        file(WRITE ${GUI_MAIN_SPEC_HASH} ${GUI_MAIN_SPEC_HASH_AFTER})
+    else()
+        message(STATUS "CHECK>  File " ${GUI_MAIN_SPEC} " isn't changed")
+    endif()
+else()
+    message(STATUS "CHECK>  File " ${GUI_MAIN_SPEC_HASH} " isn't found, create it")
+    file(WRITE ${GUI_MAIN_SPEC_HASH} ${GUI_MAIN_SPEC_HASH_AFTER})
+    set(BUILD_GUI_NEEDED "YES")
+endif()
+# check if file SimplesendGUI.spec is changed
 
 message(STATUS "CHECK>  Finish checking all GUI src files \n")
 
@@ -47,7 +69,7 @@ if(EXISTS ${GUI_MAIN_SPEC})
     endif()
 else()
     message(FATAL_ERROR "
-    Fatal> In folder ./GUI: GUI.spec not found, cannot install GUI package
-           Check this file or use \"pyi-makespec SimplesendGUI.py\" to create it
+    Fatal>  In folder ./GUI: SimplesendGUI.spec not found, cannot pack GUI source files
+            Check this file in folder ./GUI or use \"pyi-makespec SimplesendGUI.py\" to create it
     ")
 endif()

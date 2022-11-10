@@ -10,7 +10,7 @@ add_subdirectory(GUI)
 message(STATUS "STATUS> Leaving folder ./GUI \n")
 
 include_directories(include)
-include_directories(${PROJECT_SOURCE_DIR}/lib/md5/include)
+include_directories(${PROJECT_SOURCE_DIR}/lib/hash/include)
 
 message(STATUS "STATUS> Start linking static libraries")
 
@@ -22,8 +22,19 @@ find_package(gflags REQUIRED)
 message(STATUS "LINK>   Link glog static lib")
 find_package(glog REQUIRED)
 
-message(STATUS "LINK>   Link MD5 calculate static lib")
-link_directories(${PROJECT_SOURCE_DIR}/lib/md5/lib)
+message(STATUS "CHECK>  Start checking Hash static lib status \n")
+
+message(STATUS "STATUS> Accessing folder ./lib")
+add_subdirectory(lib)
+message(STATUS "STATUS> Leaving folder ./lib \n")
+
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/hash/lib)
+
+aux_source_directory(${PROJECT_SOURCE_DIR}/lib/hash/src HASH_SRC)
+
+add_library(hash4cxx STATIC ${HASH_SRC})
+
+link_directories(${PROJECT_SOURCE_DIR}/lib/hash/lib)
 
 message(STATUS "STATUS> Finish linking static libraries \n")
 
@@ -43,14 +54,14 @@ if((EXISTS ${PROJECT_SOURCE_DIR}/bin) AND (${REBUILT_GUI} STREQUAL "YES"))
     file(REMOVE_RECURSE ${PROJECT_SOURCE_DIR}/bin)
 endif()
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(Simplesend ${SRC_LIST} ${MAIN})
 
 target_link_libraries(Simplesend 
     gflags
     glog::glog
-    libmd5fcxx.a
+    libhash4cxx.a
 )
 
 if(${REBUILT_GUI} STREQUAL "YES")

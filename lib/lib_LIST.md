@@ -10,6 +10,6 @@
 
 > link: https://github.com/google/glog/releases/tag/v0.6.0
 
-### md5
+### hash4cxx
 
-> self-compiled Dynamic-link library and static library (in this project only static lib is used)
+> self-compiled static library

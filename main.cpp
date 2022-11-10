@@ -5,7 +5,7 @@
 
 #include<gflags/gflags.h>
 #include<glog/logging.h>
-#include<md5/md5fcxx.h>
+#include<hash/hash4cxx.h>
 
 int main( int argc , char** argv ){
     std::string log_info_folder    = ".\\LOG_INFO\\";

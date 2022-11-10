@@ -21,5 +21,6 @@
 
 #include"md5.h"
 #include"sha1.h"
+#include"sha224.h"
 
 #endif

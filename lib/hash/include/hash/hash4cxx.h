@@ -20,5 +20,6 @@
 #define _HASH4CXX_H_
 
 #include"md5.h"
+#include"sha1.h"
 
 #endif

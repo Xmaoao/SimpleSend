@@ -48,6 +48,8 @@ documentation and/or software.
 /* interface header */
 //#include<md5.h>
 #include<hash/md5.h>
+// here: because of the change of the header md5.h, include path needs to be changed
+// this include path is changed in project Simplesend
 
 /* system implementation headers */
 #include<cstdio>

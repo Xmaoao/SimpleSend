@@ -53,6 +53,7 @@ int main( int argc , char** argv ){
 	LOG( ERROR ) << "error";
 
     std::cout << md5( "Hello World!" ) << std::endl;
+    std::cout << sha1( "Hello World!" ) << std::endl;
 
     google::ShutdownGoogleLogging();
 

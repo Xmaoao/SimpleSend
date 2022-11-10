@@ -54,6 +54,7 @@ int main( int argc , char** argv ){
 
     std::cout << md5( "Hello World!" ) << std::endl;
     std::cout << sha1( "Hello World!" ) << std::endl;
+    std::cout << sha224( "Hello World!" ) << std::endl;
 
     google::ShutdownGoogleLogging();
 
